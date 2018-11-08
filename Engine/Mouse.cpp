@@ -1,62 +1,41 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
- *	Mouse.cpp																			  *
- *	Copyright 2016 PlanetChili <http://www.planetchili.net>								  *
- *																						  *
- *	This file is part of The Chili DirectX Framework.									  *
- *																						  *
- *	The Chili DirectX Framework is free software: you can redistribute it and/or modify	  *
- *	it under the terms of the GNU General Public License as published by				  *
- *	the Free Software Foundation, either version 3 of the License, or					  *
- *	(at your option) any later version.													  *
- *																						  *
- *	The Chili DirectX Framework is distributed in the hope that it will be useful,		  *
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of						  *
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the						  *
- *	GNU General Public License for more details.										  *
- *																						  *
- *	You should have received a copy of the GNU General Public License					  *
- *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
- ******************************************************************************************/
 #include "Mouse.h"
 
-
-std::pair<int,int> Mouse::GetPos() const
+std::pair<int, int> Mouse::GetPos() const
 {
-	return { x,y };
+	return{ x_, y_ };
 }
 
 int Mouse::GetPosX() const
 {
-	return x;
+	return x_;
 }
 
 int Mouse::GetPosY() const
 {
-	return y;
+	return y_;
 }
 
-bool Mouse::LeftIsPressed() const
+bool Mouse::IsLeftPressed() const
 {
-	return leftIsPressed;
+	return isLeftPressed_;
 }
 
-bool Mouse::RightIsPressed() const
+bool Mouse::IsRightPressed() const
 {
-	return rightIsPressed;
+	return isRightPressed_;
 }
 
 bool Mouse::IsInWindow() const
 {
-	return isInWindow;
+	return isInWindow_;
 }
 
 Mouse::Event Mouse::Read()
 {
-	if( buffer.size() > 0u )
+	if (buffer_.size() > 0)
 	{
-		Mouse::Event e = buffer.front();
-		buffer.pop();
+		Mouse::Event e = buffer_.front();
+		buffer_.pop();
 		return e;
 	}
 	else
@@ -67,76 +46,76 @@ Mouse::Event Mouse::Read()
 
 void Mouse::Flush()
 {
-	buffer = std::queue<Event>();
+	buffer_ = std::queue<Event>();
 }
 
 void Mouse::OnMouseLeave()
 {
-	isInWindow = false;
+	isInWindow_ = false;
 }
 
 void Mouse::OnMouseEnter()
 {
-	isInWindow = true;
+	isInWindow_ = true;
 }
 
-void Mouse::OnMouseMove( int newx,int newy )
+void Mouse::OnMouseMove(int newx, int newy)
 {
-	x = newx;
-	y = newy;
-
-	buffer.push( Mouse::Event( Mouse::Event::Move,*this ) );
+	x_ = newx;
+	y_ = newy;
+	
+	buffer_.push(Mouse::Event(Mouse::Event::Move, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnLeftPressed( int x,int y )
+void Mouse::OnLeftPressed(int x, int y)
 {
-	leftIsPressed = true;
+	isLeftPressed_ = true;
 
-	buffer.push( Mouse::Event( Mouse::Event::LPress,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::LPress, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnLeftReleased( int x,int y )
+void Mouse::OnLeftReleased(int x, int y)
 {
-	leftIsPressed = false;
+	isLeftPressed_ = false;
 
-	buffer.push( Mouse::Event( Mouse::Event::LRelease,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::LRelease, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnRightPressed( int x,int y )
+void Mouse::OnRightPressed(int x, int y)
 {
-	rightIsPressed = true;
+	isRightPressed_ = true;
 
-	buffer.push( Mouse::Event( Mouse::Event::RPress,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::RPress, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnRightReleased( int x,int y )
+void Mouse::OnRightReleased(int x, int y)
 {
-	rightIsPressed = false;
+	isRightPressed_ = false;
 
-	buffer.push( Mouse::Event( Mouse::Event::RRelease,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::RRelease, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnWheelUp( int x,int y )
+void Mouse::OnWheelUp(int x, int y)
 {
-	buffer.push( Mouse::Event( Mouse::Event::WheelUp,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::WheelUp, *this));
 	TrimBuffer();
 }
 
-void Mouse::OnWheelDown( int x,int y )
+void Mouse::OnWheelDown(int x, int y)
 {
-	buffer.push( Mouse::Event( Mouse::Event::WheelDown,*this ) );
+	buffer_.push(Mouse::Event(Mouse::Event::WheelDown, *this));
 	TrimBuffer();
 }
 
 void Mouse::TrimBuffer()
 {
-	while( buffer.size() > bufferSize )
+	while (buffer_.size() > bufferSize_)
 	{
-		buffer.pop();
+		buffer_.pop();
 	}
 }

@@ -21,13 +21,13 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl.h>
-#include "ChiliException.h"
+#include "IException.h"
 #include "Colors.h"
 
 class Graphics
 {
 public:
-	class Exception : public ChiliException
+	class Exception : public IException
 	{
 	public:
 		Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line );

@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "Graphics.h"
 #include "DXErr.h"
-#include "ChiliException.h"
+#include "IException.h"
 #include <assert.h>
 #include <string>
 #include <array>
@@ -321,7 +321,7 @@ void Graphics::PutPixel( int x,int y,Color c )
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
 	:
-	ChiliException( file,line,note ),
+	IException( file,line,note ),
 	hr( hr )
 {}
 

@@ -136,8 +136,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ChiliException.h" />
-    <ClInclude Include="ChiliWin.h" />
+    <ClInclude Include="IException.h" />
+    <ClInclude Include="IWin.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Game.h" />

@@ -20,7 +20,7 @@
 ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-#include "ChiliException.h"
+#include "IException.h"
 
 int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR pArgs,INT )
 {
@@ -35,7 +35,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR pArgs,INT )
 				theGame.Go();
 			}
 		}
-		catch( const ChiliException& e )
+		catch( const IException& e )
 		{
 			const std::wstring eMsg = e.GetFullMessage() + 
 				L"\n\nException caught at Windows message loop.";
@@ -55,7 +55,7 @@ int WINAPI wWinMain( HINSTANCE hInst,HINSTANCE,LPWSTR pArgs,INT )
 				L"\n\nException caught at Windows message loop." );
 		}
 	}
-	catch( const ChiliException& e )
+	catch( const IException& e )
 	{
 		const std::wstring eMsg = e.GetFullMessage() +
 			L"\n\nException caught at main window creation.";

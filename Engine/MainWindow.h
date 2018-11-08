@@ -19,11 +19,11 @@
 *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
 ******************************************************************************************/
 #pragma once
-#include "ChiliWin.h"
+#include "IWin.h"
 #include "Graphics.h"
 #include "Keyboard.h"
 #include "Mouse.h"
-#include "ChiliException.h"
+#include "IException.h"
 #include <string>
 
 // for granting special access to hWnd only for Graphics constructor
@@ -42,10 +42,10 @@ protected:
 class MainWindow : public HWNDKey
 {
 public:
-	class Exception : public ChiliException
+	class Exception : public IException
 	{
 	public:
-		using ChiliException::ChiliException;
+		using IException::IException;
 		virtual std::wstring GetFullMessage() const override { return GetNote() + L"\nAt: " + GetLocation(); }
 		virtual std::wstring GetExceptionType() const override { return L"Windows Exception"; }
 	};

@@ -1,29 +1,10 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
- *	Mouse.h																				  *
- *	Copyright 2016 PlanetChili <http://www.planetchili.net>								  *
- *																						  *
- *	This file is part of The Chili DirectX Framework.									  *
- *																						  *
- *	The Chili DirectX Framework is free software: you can redistribute it and/or modify	  *
- *	it under the terms of the GNU General Public License as published by				  *
- *	the Free Software Foundation, either version 3 of the License, or					  *
- *	(at your option) any later version.													  *
- *																						  *
- *	The Chili DirectX Framework is distributed in the hope that it will be useful,		  *
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of						  *
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the						  *
- *	GNU General Public License for more details.										  *
- *																						  *
- *	You should have received a copy of the GNU General Public License					  *
- *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
- ******************************************************************************************/
 #pragma once
 #include <queue>
 
 class Mouse
 {
 	friend class MainWindow;
+
 public:
 	class Event
 	{
@@ -39,91 +20,99 @@ public:
 			Move,
 			Invalid
 		};
+
 	private:
-		Type type;
-		bool leftIsPressed;
-		bool rightIsPressed;
-		int x;
-		int y;
+		Type type_;
+		bool isLeftPressed_;
+		bool isRightPressed_;
+		int x_;
+		int y_;
+
 	public:
-		Event()
-			:
-			type( Invalid ),
-			leftIsPressed( false ),
-			rightIsPressed( false ),
-			x( 0 ),
-			y( 0 )
+		Event():
+			type_(Invalid),
+			isLeftPressed_(false),
+			isRightPressed_(false),
+			x_(0),
+			y_(0)
 		{}
-		Event( Type type,const Mouse& parent )
-			:
-			type( type ),
-			leftIsPressed( parent.leftIsPressed ),
-			rightIsPressed( parent.rightIsPressed ),
-			x( parent.x ),
-			y( parent.y )
-		{}
+
+		Event(Type type, const Mouse& parent):
+			type_(type),
+			isLeftPressed_(parent.isLeftPressed_),
+			isRightPressed_(parent.isRightPressed_),
+			x_(parent.x_),
+			y_(parent.y_)
+			{}
+		
 		bool IsValid() const
 		{
-			return type != Invalid;
+			return type_ != Invalid;
 		}
+
 		Type GetType() const
 		{
-			return type;
+			return type_;
 		}
-		std::pair<int,int> GetPos() const
+
+		std::pair<int, int> GetPos() const
 		{
-			return{ x,y };
+			return{ x_, y_ };
 		}
+
 		int GetPosX() const
 		{
-			return x;
+			return x_;
 		}
 		int GetPosY() const
 		{
-			return y;
+			return y_;
 		}
-		bool LeftIsPressed() const
+		bool IsLeftPressed() const
 		{
-			return leftIsPressed;
+			return isLeftPressed_;
 		}
-		bool RightIsPressed() const
+		bool IsRightPressed() const
 		{
-			return rightIsPressed;
+			return isRightPressed_;
 		}
 	};
+
 public:
 	Mouse() = default;
-	Mouse( const Mouse& ) = delete;
-	Mouse& operator=( const Mouse& ) = delete;
-	std::pair<int,int> GetPos() const;
+	Mouse(const Mouse&) = delete;
+	Mouse& operator=(const Mouse&) = delete;
+	std::pair<int, int> GetPos() const;
 	int GetPosX() const;
 	int GetPosY() const;
-	bool LeftIsPressed() const;
-	bool RightIsPressed() const;
+	bool IsRightPressed() const;
+	bool IsLeftPressed() const;
 	bool IsInWindow() const;
-	Mouse::Event Read();
+	Event Read();
 	bool IsEmpty() const
 	{
-		return buffer.empty();
+		return buffer_.empty();
 	}
 	void Flush();
+
 private:
-	void OnMouseMove( int x,int y );
+	void OnMouseMove(int x, int y);
 	void OnMouseLeave();
 	void OnMouseEnter();
-	void OnLeftPressed( int x,int y );
-	void OnLeftReleased( int x,int y );
-	void OnRightPressed( int x,int y );
-	void OnRightReleased( int x,int y );
-	void OnWheelUp( int x,int y );
-	void OnWheelDown( int x,int y );
+	void OnLeftPressed(int x, int y);
+	void OnLeftReleased(int x, int y);
+	void OnRightPressed(int x, int y);
+	void OnRightReleased(int x, int y);
+	void OnWheelUp(int x, int y);
+	void OnWheelDown(int x, int y);
 	void TrimBuffer();
+
 private:
-	static constexpr unsigned int bufferSize = 4u;
-	int x;
-	int y;
-	bool leftIsPressed = false;
-	bool rightIsPressed = false;
-	bool isInWindow = false;
-	std::queue<Event> buffer;
+	static constexpr unsigned int bufferSize_ = 4u;
+	int x_;
+	int y_;
+	bool isLeftPressed_ = false;
+	bool isRightPressed_ = false;
+	bool isInWindow_ = false;
+	std::queue<Event> buffer_;
 };

@@ -21,7 +21,7 @@
 #include "MainWindow.h"
 #include "Resource.h"
 #include "Graphics.h"
-#include "ChiliException.h"
+#include "IException.h"
 #include "Game.h"
 #include <assert.h>
 
