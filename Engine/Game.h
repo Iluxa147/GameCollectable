@@ -30,17 +30,29 @@ public:
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
-	void Go();
+	void Go(); //Game loop prototype
+
 private:
-	void ComposeFrame();
-	void UpdateModel();
-	/********************************/
-	/*  User Functions              */
-	/********************************/
+	void ComposeFrame(); //visual
+	void UpdateModel(); //logic
+	void DrawCross(int x, int y, int r, int g, int b);
+	bool isCollided(int box0x, int box0y, int box1x, int box1y);
+
 private:
-	MainWindow& wnd;
-	Graphics gfx;
-	/********************************/
-	/*  User Variables              */
-	/********************************/
+	MainWindow& wnd_;
+	Graphics gfx_;
+	int xStatic_ = 200;
+	int yStatic_ = 200;
+	int xMovable_ = 400;
+	int yMovable_ = 400;
+	bool isCollided_ = false;
+
+	/*int vX_ = 0;
+	int vY_ = 0;
+	int xMovable_ = gfx_.ScreenWidth / 2;
+	int yMovable_ = gfx_.ScreenHeight / 2;
+	bool isRight = false;
+	bool isLeft = false;
+	bool isTop = false;
+	bool isBottom = false;*/
 };
