@@ -1,36 +1,16 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
- *	Keyboard.cpp																		  *
- *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
- *																						  *
- *	This file is part of The Chili DirectX Framework.									  *
- *																						  *
- *	The Chili DirectX Framework is free software: you can redistribute it and/or modify	  *
- *	it under the terms of the GNU General Public License as published by				  *
- *	the Free Software Foundation, either version 3 of the License, or					  *
- *	(at your option) any later version.													  *
- *																						  *
- *	The Chili DirectX Framework is distributed in the hope that it will be useful,		  *
- *	but WITHOUT ANY WARRANTY; without even the implied warranty of						  *
- *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the						  *
- *	GNU General Public License for more details.										  *
- *																						  *
- *	You should have received a copy of the GNU General Public License					  *
- *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
- ******************************************************************************************/
 #include "Keyboard.h"
 
-bool Keyboard::KeyIsPressed( unsigned char keycode ) const
+bool Keyboard::IsKeyPressed( unsigned char keycode ) const
 {
-	return keystates[keycode];
+	return keyStates_[keycode];
 }
 
 Keyboard::Event Keyboard::ReadKey()
 {
-	if( keybuffer.size() > 0u )
+	if( keyBuffer_.size() > 0u )
 	{
-		Keyboard::Event e = keybuffer.front();
-		keybuffer.pop();
+		Keyboard::Event e = keyBuffer_.front();
+		keyBuffer_.pop();
 		return e;
 	}
 	else
@@ -39,17 +19,17 @@ Keyboard::Event Keyboard::ReadKey()
 	}
 }
 
-bool Keyboard::KeyIsEmpty() const
+bool Keyboard::IsKeyEmpty() const
 {
-	return keybuffer.empty();
+	return keyBuffer_.empty();
 }
 
 char Keyboard::ReadChar()
 {
-	if( charbuffer.size() > 0u )
+	if( charBuffer_.size() > 0u )
 	{
-		unsigned char charcode = charbuffer.front();
-		charbuffer.pop();
+		unsigned char charcode = charBuffer_.front();
+		charBuffer_.pop();
 		return charcode;
 	}
 	else
@@ -60,17 +40,17 @@ char Keyboard::ReadChar()
 
 bool Keyboard::CharIsEmpty() const
 {
-	return charbuffer.empty();
+	return charBuffer_.empty();
 }
 
 void Keyboard::FlushKey()
 {
-	keybuffer = std::queue<Event>();
+	keyBuffer_ = std::queue<Event>();
 }
 
 void Keyboard::FlushChar()
 {
-	charbuffer = std::queue<char>();
+	charBuffer_ = std::queue<char>();
 }
 
 void Keyboard::Flush()
@@ -81,43 +61,43 @@ void Keyboard::Flush()
 
 void Keyboard::EnableAutorepeat()
 {
-	autorepeatEnabled = true;
+	isAutorepeatEnabled_ = true;
 }
 
 void Keyboard::DisableAutorepeat()
 {
-	autorepeatEnabled = false;
+	isAutorepeatEnabled_ = false;
 }
 
-bool Keyboard::AutorepeatIsEnabled() const
+bool Keyboard::IsAutorepeatEnabled() const
 {
-	return autorepeatEnabled;
+	return isAutorepeatEnabled_;
 }
 
 void Keyboard::OnKeyPressed( unsigned char keycode )
 {
-	keystates[ keycode ] = true;	
-	keybuffer.push( Keyboard::Event( Keyboard::Event::Press,keycode ) );
-	TrimBuffer( keybuffer );
+	keyStates_[ keycode ] = true;
+	keyBuffer_.push( Keyboard::Event( Keyboard::Event::Press,keycode ) );
+	TrimBuffer(keyBuffer_);
 }
 
 void Keyboard::OnKeyReleased( unsigned char keycode )
 {
-	keystates[ keycode ] = false;
-	keybuffer.push( Keyboard::Event( Keyboard::Event::Release,keycode ) );
-	TrimBuffer( keybuffer );
+	keyStates_[ keycode ] = false;
+	keyBuffer_.push( Keyboard::Event( Keyboard::Event::Release,keycode ) );
+	TrimBuffer(keyBuffer_);
 }
 
 void Keyboard::OnChar( char character )
 {
-	charbuffer.push( character );
-	TrimBuffer( charbuffer );
+	charBuffer_.push( character );
+	TrimBuffer(charBuffer_);
 }
 
 template<typename T>
 void Keyboard::TrimBuffer( std::queue<T>& buffer )
 {
-	while( buffer.size() > bufferSize )
+	while( buffer.size() > bufferSize_)
 	{
 		buffer.pop();
 	}

@@ -31,23 +31,23 @@ public:
 		return *this;
 	}
 
-	constexpr unsigned int GetX() //TODO WTF divided x and a
+	constexpr unsigned int GetX() const //TODO WTF divided X and A
 	{
 		return dword >> 24; //move x to low bit part
 	}
-	constexpr unsigned int GetA()
+	constexpr unsigned int GetA() const
 	{
 		return GetX();
 	}
-	constexpr unsigned int GetR()
+	constexpr unsigned int GetR() const
 	{
 		return (dword >> 16u) & 0xFFu; //mask R color value
 	}
-	constexpr unsigned int GetG()
+	constexpr unsigned int GetG() const
 	{
 		return (dword >> 8u) & 0xFFu; //mask G color value
 	}
-	constexpr unsigned int GetB()
+	constexpr unsigned int GetB() const
 	{
 		return dword & 0xFFu; //mask B color value
 	}
