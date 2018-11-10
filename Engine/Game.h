@@ -23,6 +23,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Carpet.h"
+#include "Dude.h"
 
 class Game
 {
@@ -36,16 +38,38 @@ private:
 	void ComposeFrame(); //visual
 	void UpdateModel(); //logic
 	void DrawCross(int x, int y, int r, int g, int b);
-	bool isCollided(int box0x, int box0y, int box1x, int box1y);
+	//bool isCollided(int box0x, int box0y, int box1x, int box1y);
+	//int OnBorderX(int boxX);
+	//int OnBorderY(int boxY);
+
 
 private:
 	MainWindow& wnd_;
 	Graphics gfx_;
-	int xStatic_ = 200;
-	int yStatic_ = 200;
-	int xMovable_ = 400;
-	int yMovable_ = 400;
-	bool isCollided_ = false;
+	
+	Carpet Carpet0_;
+	Carpet Carpet1_;
+	Carpet Carpet2_;
+
+	Dude Dude0_;
+	/*int carpet1X_ = 200;
+	int carpet1Y_ = 200;
+	int carpet1VX_ = 5;
+	int carpet1VY_ = 5;
+	bool isCarpet1Collected_ = false;
+
+	int carpet2X_ = 300;
+	int carpet2Y_ = 300;
+	bool isCarpet2Collected_ = false;
+
+	int carpet3X_ = 400;
+	int carpet3Y_ = 400;
+	bool isCarpet3Collected_ = false;*/
+
+
+	//bool isCollided_ = false;
+	//bool isOnBorder_ = false;
+
 
 	/*int vX_ = 0;
 	int vY_ = 0;

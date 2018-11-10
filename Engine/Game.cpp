@@ -21,11 +21,23 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd_( wnd ),
-	gfx_( wnd )
+Game::Game(MainWindow& wnd) :
+	wnd_(wnd),
+	gfx_(wnd)
 {
+	Carpet0_.x_ = 20;
+	Carpet0_.y_ = 20;
+	Carpet1_.x_ = 100;
+	Carpet1_.y_ = 100;
+	Carpet2_.x_ = 400;
+	Carpet2_.y_ = 400;
+
+	Carpet0_.vx_ = 5;
+	Carpet0_.vy_ = 5;
+	Carpet1_.vx_ = -5;
+	Carpet1_.vy_ = -5;
+	Carpet2_.vx_ = -5;
+	Carpet2_.vy_ = -5;
 }
 
 void Game::Go()
@@ -41,39 +53,53 @@ void Game::UpdateModel()
 
 	if (wnd_.kbd.IsKeyPressed(VK_RIGHT))
 	{
-		xMovable_ += 3;
+		Dude0_.x_ += 8;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_LEFT))
 	{
-		xMovable_ -= 3;
+		Dude0_.x_ -= 8;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_UP))
 	{
-		yMovable_ -= 3;
+		Dude0_.y_ -= 8;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_DOWN))
 	{
-		yMovable_ += 3;
+		Dude0_.y_ += 8;
 	}
 	
-	if (xMovable_ + 5 >= gfx_.ScreenWidth)
-	{
-		xMovable_ = gfx_.ScreenWidth - 6;
-	}
-	if (xMovable_ - 5 <= 0)
-	{
-		xMovable_ = 5;
-	}
-	if (yMovable_ + 5 >= gfx_.ScreenHeight)
-	{
-		yMovable_ = gfx_.ScreenHeight - 6;
-	}
-	if (yMovable_ - 5 <= 0)
-	{
-		yMovable_ = 5;
-	}
+	Dude0_.OnBorder();
+	//Dude0_.x_ = OnBorderX(Dude0_.x_);
+	//Dude0_.y_ = OnBorderY(Dude0_.y_);
+	
 
-	isCollided_ = isCollided(xMovable_, yMovable_, xStatic_, yStatic_);
+	Carpet0_.UpdateCarpet();
+	Carpet1_.UpdateCarpet();
+	Carpet2_.UpdateCarpet();
+
+
+	/*carpet1X_ += carpet1VX_;
+	carpet1Y_ += carpet1VY_;
+
+	{
+		const int carpet1XHold = carpet1X_;
+		const int carpet1YHold = carpet1Y_;
+
+		carpet1X_ = OnBorderX(carpet1X_);
+		if (carpet1X_ != carpet1XHold)
+		{
+			carpet1VX_ = -carpet1VX_;
+		}
+
+		carpet1Y_ = OnBorderY(carpet1Y_);
+		if (carpet1Y_ != carpet1YHold)
+		{
+			carpet1VY_ = -carpet1VY_;
+		}
+	}*/
+
+	Carpet0_.isCollided(Dude0_.x_, Dude0_.y_, Dude0_.width, Dude0_.height);
+	//isCollided_ = isCollided(Dude0_.x_, Dude0_.y_, Carpet0_.x_, Carpet0_.y_);
 
 
 }
@@ -84,7 +110,7 @@ void Game::ComposeFrame()
 	int rMovable, gMovable, bMovable;
 	int rStatic = 0, gStatic = 255, bStatic = 0;
 
-	if (isCollided_)
+	if (Carpet0_.isCollected_ || Carpet1_.isCollected_ || Carpet2_.isCollected_)
 	{
 		rMovable = 255;
 		gMovable = bMovable = 0;
@@ -94,8 +120,11 @@ void Game::ComposeFrame()
 		rMovable = gMovable = bMovable = 255;
 	}
 
-	DrawCross(xMovable_, yMovable_, rMovable, gMovable, bMovable);
-	DrawCross(xStatic_, yStatic_, rStatic, gStatic, bStatic);
+	DrawCross(Dude0_.x_, Dude0_.y_, rMovable, gMovable, bMovable);
+	DrawCross(Carpet0_.x_, Carpet0_.y_, rStatic, gStatic, bStatic);
+	DrawCross(Carpet1_.x_, Carpet1_.y_, rStatic, gStatic, bStatic);
+	DrawCross(Carpet2_.x_, Carpet2_.y_, rStatic, gStatic, bStatic);
+
 }
 
 void Game::DrawCross(int x, int y, int r, int g, int b) // TODO hardcode time!
@@ -113,23 +142,4 @@ void Game::DrawCross(int x, int y, int r, int g, int b) // TODO hardcode time!
 	gfx_.PutPixel(x, 4 + y, r, g, b);
 	gfx_.PutPixel(x, 5 + y, r, g, b);
 
-}
-
-bool Game::isCollided(int box0x, int box0y, int box1x, int box1y)
-{
-	const int LBox0 = box0x - 5;
-	const int RBox0 = box0x + 5;
-	const int TBox0 = box0y - 5;
-	const int BBox0 = box0y + 5;
-
-	const int LBox1 = box1x - 5;
-	const int RBox1 = box1x + 5;
-	const int TBox1 = box1y - 5;
-	const int BBox1 = box1y + 5;
-
-	return
-		LBox0 <= RBox1 &&
-		RBox0 >= LBox1 &&
-		TBox0 <= BBox1 &&
-		BBox0 >= TBox1;
 }
