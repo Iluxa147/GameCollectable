@@ -52,6 +52,15 @@ private:
 	Carpet Carpet2_;
 
 	Dude Dude0_;
+
+	Point point0_;
+
+	unsigned int x0 = 50;
+	unsigned int y0 = 50;
+
+	unsigned int x1 = 100;
+	unsigned int y1 = 100;
+
 	/*int carpet1X_ = 200;
 	int carpet1Y_ = 200;
 	int carpet1VX_ = 5;

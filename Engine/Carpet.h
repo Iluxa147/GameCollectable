@@ -1,10 +1,13 @@
 #pragma once
+#include "Graphics.h"
+#include "Dude.h"
 
 class Carpet
 {
 public:
 	void UpdateCarpet();
-	void isCollided(int dudeX, int dudeY, int dudeW, int dudeH);
+	void isCollided(const Dude& dude);
+	void DrawCarpet(Graphics& gfx) const; //const because readonly
 
 public:
 	int x_;

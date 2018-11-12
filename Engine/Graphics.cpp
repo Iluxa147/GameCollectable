@@ -307,14 +307,36 @@ void Graphics::BeginFrame()
 	memset( pSysBuffer,0u,sizeof( Color ) * Graphics::ScreenHeight * Graphics::ScreenWidth );
 }
 
-void Graphics::PutPixel( int x,int y,Color c )
+void Graphics::PutPixel(int x, int y, Color c)
 {
-	assert( x >= 0 );
-	assert( x < int( Graphics::ScreenWidth ) );
-	assert( y >= 0 );
-	assert( y < int( Graphics::ScreenHeight ) );
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
+
+void Graphics::DrawRect(Point point, int width, int height)
+{
+	if (point.x > width)
+	{
+		std::swap(point.x, width);
+	}
+	if (point.y > height)
+	{
+		std::swap(point.y, height);
+	}
+
+	for (size_t y = point.y; y < height; ++y)
+	{
+		for (size_t x = point.x; x < width; ++x)
+		{
+			PutPixel(x, y, point.color);
+		}
+	}
+
+}
+
 
 
 //////////////////////////////////////////////////

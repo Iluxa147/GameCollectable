@@ -5,6 +5,7 @@ class Dude
 {
 public:
 	void OnBorder();
+	void DrawDude(Graphics& gfx) const; //const because readonly
 
 public:
 	int x_ = Graphics::ScreenWidth / 2;

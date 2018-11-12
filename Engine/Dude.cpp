@@ -21,3 +21,20 @@ void Dude::OnBorder()
 	}
 
 }
+
+void Dude::DrawDude(Graphics& gfx) const
+{
+	gfx.PutPixel(-5 + x_, y_, 255, 255, 255);
+	gfx.PutPixel(-4 + x_, y_, 255, 255, 255);
+	gfx.PutPixel(-3 + x_, y_, 255, 255, 255);
+	gfx.PutPixel(3 + x_, y_,  255, 255, 255);
+	gfx.PutPixel(4 + x_, y_,  255, 255, 255);
+	gfx.PutPixel(5 + x_, y_,  255, 255, 255);
+	gfx.PutPixel(x_, -5 + y_, 255, 255, 255);
+	gfx.PutPixel(x_, -4 + y_, 255, 255, 255);
+	gfx.PutPixel(x_, -3 + y_, 255, 255, 255);
+	gfx.PutPixel(x_, 3 + y_,  255, 255, 255);
+	gfx.PutPixel(x_, 4 + y_,  255, 255, 255);
+	gfx.PutPixel(x_, 5 + y_,  255, 255, 255);
+
+}

@@ -32,12 +32,16 @@ Game::Game(MainWindow& wnd) :
 	Carpet2_.x_ = 400;
 	Carpet2_.y_ = 400;
 
-	Carpet0_.vx_ = 5;
-	Carpet0_.vy_ = 5;
+	Carpet0_.vx_ = 0;
+	Carpet0_.vy_ = 0;
 	Carpet1_.vx_ = -5;
 	Carpet1_.vy_ = -5;
 	Carpet2_.vx_ = -5;
 	Carpet2_.vy_ = -5;
+
+	point0_.x = 100;
+	point0_.y = 100;
+	point0_.color = Colors::Magenta;
 }
 
 void Game::Go()
@@ -53,21 +57,63 @@ void Game::UpdateModel()
 
 	if (wnd_.kbd.IsKeyPressed(VK_RIGHT))
 	{
-		Dude0_.x_ += 8;
+		point0_.x += 3;
+
+		x0+=3;
+
+		Dude0_.x_ += 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_LEFT))
 	{
-		Dude0_.x_ -= 8;
+		point0_.x -= 3;
+
+		x0-=3;
+
+		Dude0_.x_ -= 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_UP))
 	{
-		Dude0_.y_ -= 8;
+		point0_.y -= 3;
+
+		y0-=3;
+
+		Dude0_.y_ -= 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_DOWN))
 	{
-		Dude0_.y_ += 8;
+		point0_.y += 3;
+
+		y0+=3;
+
+		Dude0_.y_ += 3;
 	}
-	
+
+	if (wnd_.mouse.IsLeftPressed())
+	{
+		x1 = wnd_.mouse.GetPosX();
+		y1 = wnd_.mouse.GetPosY();
+	}
+
+	/*if (wnd_.kbd.IsKeyPressed('D'))
+	{
+		squareLengthX+=3;
+	}
+
+	if (wnd_.kbd.IsKeyPressed('A'))
+	{
+		squareLengthX -= 3;
+	}
+
+	if (wnd_.kbd.IsKeyPressed('W'))
+	{
+		squareHeightY -= 3;
+	}
+
+	if (wnd_.kbd.IsKeyPressed('S'))
+	{
+		squareHeightY += 3;
+	}*/
+
 	Dude0_.OnBorder();
 	//Dude0_.x_ = OnBorderX(Dude0_.x_);
 	//Dude0_.y_ = OnBorderY(Dude0_.y_);
@@ -98,7 +144,7 @@ void Game::UpdateModel()
 		}
 	}*/
 
-	Carpet0_.isCollided(Dude0_.x_, Dude0_.y_, Dude0_.width, Dude0_.height);
+	Carpet0_.isCollided(Dude0_);
 	//isCollided_ = isCollided(Dude0_.x_, Dude0_.y_, Carpet0_.x_, Carpet0_.y_);
 
 
@@ -107,8 +153,12 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
+	gfx_.DrawRect(point0_, x1, y1);
+
 	int rMovable, gMovable, bMovable;
 	int rStatic = 0, gStatic = 255, bStatic = 0;
+
+
 
 	if (Carpet0_.isCollected_ || Carpet1_.isCollected_ || Carpet2_.isCollected_)
 	{
@@ -120,10 +170,17 @@ void Game::ComposeFrame()
 		rMovable = gMovable = bMovable = 255;
 	}
 
-	DrawCross(Dude0_.x_, Dude0_.y_, rMovable, gMovable, bMovable);
-	DrawCross(Carpet0_.x_, Carpet0_.y_, rStatic, gStatic, bStatic);
-	DrawCross(Carpet1_.x_, Carpet1_.y_, rStatic, gStatic, bStatic);
-	DrawCross(Carpet2_.x_, Carpet2_.y_, rStatic, gStatic, bStatic);
+	Dude0_.DrawDude(gfx_);
+	
+	Carpet0_.DrawCarpet(gfx_);
+	Carpet1_.DrawCarpet(gfx_);
+	Carpet2_.DrawCarpet(gfx_);
+
+	//DrawCross(Dude0_.x_, Dude0_.y_, rMovable, gMovable, bMovable);
+
+	//DrawCross(Carpet0_.x_, Carpet0_.y_, rStatic, gStatic, bStatic);
+	//DrawCross(Carpet1_.x_, Carpet1_.y_, rStatic, gStatic, bStatic);
+	//DrawCross(Carpet2_.x_, Carpet2_.y_, rStatic, gStatic, bStatic);
 
 }
 
@@ -141,5 +198,4 @@ void Game::DrawCross(int x, int y, int r, int g, int b) // TODO hardcode time!
 	gfx_.PutPixel(x, 3 + y, r, g, b);
 	gfx_.PutPixel(x, 4 + y, r, g, b);
 	gfx_.PutPixel(x, 5 + y, r, g, b);
-
 }

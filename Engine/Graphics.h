@@ -23,6 +23,7 @@
 #include <wrl.h>
 #include "IException.h"
 #include "Colors.h"
+#include "Point.h"
 
 class Graphics
 {
@@ -55,7 +56,9 @@ public:
 	{
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
-	void PutPixel( int x,int y,Color c );
+	void PutPixel(int x, int y, Color c);
+
+	void DrawRect(Point point, int width, int height);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -1,5 +1,4 @@
 #include "Carpet.h"
-#include "Graphics.h"
 
 void Carpet::UpdateCarpet()
 {
@@ -29,18 +28,37 @@ void Carpet::UpdateCarpet()
 	}
 }
 
-void Carpet::isCollided(int dudeX, int dudeY, int dudeW, int dudeH)
+void Carpet::isCollided(const Dude& dude)
 {
 	if (
-		x_ - width <= dudeX + dudeW &&
-		x_ + width >= dudeX + dudeW &&
-		y_ - height <= dudeY + dudeH &&
-		y_ + height >= dudeY - dudeH)
+		x_ - width <= dude.x_ + dude.width &&
+		x_ + width >= dude.x_ - dude.width &&
+		y_ - height <= dude.y_ + dude.height &&
+		y_ + height >= dude.y_ - dude.height)
 	{
 		isCollected_ = true;
 	}
 	else
 	{
 		isCollected_ = false;
+	}
+}
+
+void Carpet::DrawCarpet(Graphics& gfx) const
+{
+	if (!isCollected_)
+	{
+		gfx.PutPixel(-5 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(-4 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(-3 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(3 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(4 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(5 + x_, y_, 0, 255, 0);
+		gfx.PutPixel(x_, -5 + y_, 0, 255, 0);
+		gfx.PutPixel(x_, -4 + y_, 0, 255, 0);
+		gfx.PutPixel(x_, -3 + y_, 0, 255, 0);
+		gfx.PutPixel(x_, 3 + y_, 0, 255, 0);
+		gfx.PutPixel(x_, 4 + y_, 0, 255, 0);
+		gfx.PutPixel(x_, 5 + y_, 0, 255, 0);
 	}
 }
