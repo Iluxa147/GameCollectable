@@ -31,10 +31,10 @@ void Carpet::UpdateCarpet()
 void Carpet::isCollided(const Dude& dude)
 {
 	if (
-		x_ - width <= dude.x_ + dude.width &&
-		x_ + width >= dude.x_ - dude.width &&
-		y_ - height <= dude.y_ + dude.height &&
-		y_ + height >= dude.y_ - dude.height)
+		x_ - width <= dude.GetX() + dude.GetWidth() &&
+		x_ + width >= dude.GetX() - dude.GetWidth() &&
+		y_ - height <= dude.GetY() + dude.GetHeight() &&
+		y_ + height >= dude.GetY() - dude.GetHeight() )
 	{
 		isCollected_ = true;
 	}

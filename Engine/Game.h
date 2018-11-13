@@ -29,9 +29,9 @@
 class Game
 {
 public:
-	Game( class MainWindow& wnd );
-	Game( const Game& ) = delete;
-	Game& operator=( const Game& ) = delete;
+	Game(class MainWindow& wnd);
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
 	void Go(); //Game loop prototype
 
 private:
@@ -46,10 +46,9 @@ private:
 private:
 	MainWindow& wnd_;
 	Graphics gfx_;
-	
-	Carpet Carpet0_;
-	Carpet Carpet1_;
-	Carpet Carpet2_;
+
+	static constexpr int size = 20;
+	Carpet Carpet[size];
 
 	Dude Dude0_;
 

@@ -23,25 +23,15 @@
 
 Game::Game(MainWindow& wnd) :
 	wnd_(wnd),
-	gfx_(wnd)
+	gfx_(wnd),
+	Carpet0_(20, 20, 0, 0),
+	Carpet1_(100, 100, -5, -5),
+	Carpet2_(400, 400, -5, -5),
+	Dude0_(200, 200)
 {
-	Carpet0_.x_ = 20;
-	Carpet0_.y_ = 20;
-	Carpet1_.x_ = 100;
-	Carpet1_.y_ = 100;
-	Carpet2_.x_ = 400;
-	Carpet2_.y_ = 400;
-
-	Carpet0_.vx_ = 0;
-	Carpet0_.vy_ = 0;
-	Carpet1_.vx_ = -5;
-	Carpet1_.vy_ = -5;
-	Carpet2_.vx_ = -5;
-	Carpet2_.vy_ = -5;
-
 	point0_.x = 100;
 	point0_.y = 100;
-	point0_.color = Colors::Magenta;
+	point0_.color = Colors::Yellow;
 }
 
 void Game::Go()
@@ -50,10 +40,12 @@ void Game::Go()
 	UpdateModel();
 	ComposeFrame();
 	gfx_.EndFrame();
+
 }
 
 void Game::UpdateModel()
 {
+	Dude0_.Update(wnd_.kbd);
 
 	if (wnd_.kbd.IsKeyPressed(VK_RIGHT))
 	{
@@ -61,7 +53,7 @@ void Game::UpdateModel()
 
 		x0+=3;
 
-		Dude0_.x_ += 3;
+		//Dude0_.x_ += 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_LEFT))
 	{
@@ -69,7 +61,7 @@ void Game::UpdateModel()
 
 		x0-=3;
 
-		Dude0_.x_ -= 3;
+		//Dude0_.x_ -= 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_UP))
 	{
@@ -77,7 +69,7 @@ void Game::UpdateModel()
 
 		y0-=3;
 
-		Dude0_.y_ -= 3;
+		//Dude0_.y_ -= 3;
 	}
 	if (wnd_.kbd.IsKeyPressed(VK_DOWN))
 	{
@@ -85,7 +77,7 @@ void Game::UpdateModel()
 
 		y0+=3;
 
-		Dude0_.y_ += 3;
+		//Dude0_.y_ += 3;
 	}
 
 	if (wnd_.mouse.IsLeftPressed())
@@ -160,7 +152,7 @@ void Game::ComposeFrame()
 
 
 
-	if (Carpet0_.isCollected_ || Carpet1_.isCollected_ || Carpet2_.isCollected_)
+	if (Carpet0_.isCollided() || Carpet1_.isCollided() || Carpet2_.isCollided())
 	{
 		rMovable = 255;
 		gMovable = bMovable = 0;
