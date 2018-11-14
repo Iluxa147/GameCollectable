@@ -5,9 +5,10 @@
 class Carpet
 {
 public:
-	Carpet(int x, int y, int vx, int vy) :
+	/*Carpet(int x, int y, int vx, int vy) :
 		x_(x), y_(y), vx_(vx), vy_(vy)
-	{}
+	{}*/
+	void CarpetInit(int x, int y, int vx, int vy);
 	void UpdateCarpet();
 	void isCollided(const Dude& dude);
 	void DrawCarpet(Graphics& gfx) const; //const because readonly

@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "Carpet.h"
 #include "Dude.h"
+#include <random>  
+#include <ctime>
 
 class Game
 {
@@ -38,6 +40,7 @@ private:
 	void ComposeFrame(); //visual
 	void UpdateModel(); //logic
 	void DrawCross(int x, int y, int r, int g, int b);
+	void DrawHello(int x, int y, int r, int g, int b);
 	//bool isCollided(int box0x, int box0y, int box1x, int box1y);
 	//int OnBorderX(int boxX);
 	//int OnBorderY(int boxY);
@@ -47,8 +50,18 @@ private:
 	MainWindow& wnd_;
 	Graphics gfx_;
 
-	static constexpr int size = 20;
-	Carpet Carpet[size];
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> xDst_;
+	std::uniform_int_distribution<int> yDst_;
+
+
+	static constexpr int carpetsSize_ = 5;
+	Carpet Carpets_[carpetsSize_];
+
+	/*Carpet Carpet0_;
+	Carpet Carpet1_;
+	Carpet Carpet2_;*/
 
 	Dude Dude0_;
 
@@ -60,6 +73,7 @@ private:
 	unsigned int x1 = 100;
 	unsigned int y1 = 100;
 
+	bool isGameStarted_ = false;
 	/*int carpet1X_ = 200;
 	int carpet1Y_ = 200;
 	int carpet1VX_ = 5;

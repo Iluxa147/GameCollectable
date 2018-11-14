@@ -334,7 +334,26 @@ void Graphics::DrawRect(Point point, int width, int height)
 			PutPixel(x, y, point.color);
 		}
 	}
+}
 
+void Graphics::DrawRect(int pointX, int pointY, int width, int height)
+{
+	if (pointX > width)
+	{
+		std::swap(pointX, width);
+	}
+	if (pointY > height)
+	{
+		std::swap(pointY, height);
+	}
+
+	for (size_t y = pointY; y < height; ++y)
+	{
+		for (size_t x = pointX; x < width; ++x)
+		{
+			PutPixel(x, y, Colors::Cyan);
+		}
+	}
 }
 
 

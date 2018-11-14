@@ -1,5 +1,13 @@
 #include "Carpet.h"
 
+void Carpet::CarpetInit(int x, int y, int vx, int vy)
+{
+	x_ = x;
+	y_ = y;
+	vx_ = vx;
+	vy_ = vy;
+}
+
 void Carpet::UpdateCarpet()
 {
 	x_ += vx_;
@@ -30,18 +38,19 @@ void Carpet::UpdateCarpet()
 
 void Carpet::isCollided(const Dude& dude)
 {
-	if (
+	if(
+		// return isCollected_=
 		x_ - width <= dude.GetX() + dude.GetWidth() &&
 		x_ + width >= dude.GetX() - dude.GetWidth() &&
 		y_ - height <= dude.GetY() + dude.GetHeight() &&
-		y_ + height >= dude.GetY() - dude.GetHeight() )
-	{
+		y_ + height >= dude.GetY() - dude.GetHeight()
+	){
 		isCollected_ = true;
 	}
-	else
+	/*else
 	{
 		isCollected_ = false;
-	}
+	}*/
 }
 
 void Carpet::DrawCarpet(Graphics& gfx) const

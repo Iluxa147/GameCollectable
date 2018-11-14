@@ -104,7 +104,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Chili.ico">
+    <Image Include="IIco.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
