@@ -169,7 +169,7 @@ void Game::UpdateModel()
 
 		if (allCollided)
 		{
-			gfx_.DrawRect(100,100, 50, 50);
+			gfx_.DrawRect(200, 200, 50, 50);
 		}
 
 		//isCollided_ = isCollided(Dude0_.x_, Dude0_.y_, Carpet0_.x_, Carpet0_.y_);
@@ -237,17 +237,19 @@ void Game::DrawCross(int x, int y, int r, int g, int b) // TODO hardcode time!
 
 void Game::DrawHello(int x, int y, int r, int g, int b) // TODO hardcode time!
 {
-	for (size_t i = 0; i < 10; i++)
+	for (size_t yy = 0; yy < 200; ++yy)
 	{
-		gfx_.PutPixel(i + x, y, r, g, b);
-
+		for (size_t xx = 0; xx < 300; ++xx)
+		{
+			gfx_.PutPixel(x+xx, y+yy, r, g, b);
+		}
 	}
 
-	for (size_t i = 0; i < 10; i++)
+	/*for (size_t i = 0; i < 10; i++)
 	{
 		gfx_.PutPixel(i + x, y+2, r, g, b);
 
-	}
+	}*/
 
 
 }
